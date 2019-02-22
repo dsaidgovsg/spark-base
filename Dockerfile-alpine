@@ -1,0 +1,45 @@
+ARG SPARK_VERSION
+ARG HADOOP_VERSION
+FROM guangie88/spark-custom-addons:${SPARK_VERSION}_hadoop-${HADOOP_VERSION}_hive_pyspark_alpine
+
+ARG PACKAGE_SET=standard
+
+RUN set -euo pipefail && \
+    # Install build deps
+    apk add --no-cache \
+        gcc \
+        g++ \
+        musl-dev \
+        py2-pip \
+        python2-dev \
+        python3-dev \
+        ; \
+    # Install pip packages
+    if [ "${PACKAGE_SET}" = "standard" ]; then \
+        PACKAGES="numpy pandas pyproj shapely requests"; \
+    fi; \
+    ## TODO - shapely will fail because it needs libgeos, which doesn't exist in Alpine repo (unless edge)
+    ## Python 2
+    python2 -m pip install --no-cache-dir --no-binary=:all: wheel; \
+    for PACKAGE in ${PACKAGES}; do \
+        python2 -m pip install --no-cache-dir --no-binary=:all: ${PACKAGE}; \
+    done; \
+    python2 -m pip uninstall wheel; \
+    ## Python 3
+    python3 -m pip install --no-cache-dir --no-binary=:all: wheel; \
+    for PACKAGE in ${PACKAGES}; do \
+        python3 -m pip install --no-cache-dir --no-binary=:all: ${PACKAGE}; \
+    done; \
+    python3 -m pip uninstall wheel; \
+    # Clean up build deps
+    apt-get remove -y \
+        gcc \
+        g++ \
+        musl-dev \
+        py2-pip \
+        python2-dev \
+        python3-dev \
+        ; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
+    :

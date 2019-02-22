@@ -1,0 +1,34 @@
+language: bash
+
+env:
+  global:
+  - IMAGE_NAME=datagovsg/spark-base
+
+matrix:
+  include:
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.0
+    - HADOOP_VERSION=3.1.0
+    - PACKAGE_SET=standard
+    - DIST=debian
+
+before_script:
+- set -e
+- docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+
+script:
+- FROM_DOCKER_TAG="${SPARK_VERSION}_hadoop-${HADOOP_VERSION}_hive_pyspark_${DIST}"
+- FULL_IMAGE_NAME="${IMAGE_NAME}:${FROM_DOCKER_TAG}"
+- |
+  docker build . -f Dockerfile-${DIST} \
+    --build-arg FROM_DOCKER_TAG="${FROM_DOCKER_TAG}" \
+    -t ${FULL_IMAGE_NAME}
+- |
+  if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+    docker push ${FULL_IMAGE_NAME};
+  fi
+
+branches:
+  only:
+  - master

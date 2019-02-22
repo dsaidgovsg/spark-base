@@ -2,7 +2,8 @@ language: bash
 
 env:
   global:
-  - IMAGE_NAME=datagovsg/spark-base
+  # - IMAGE_NAME=datagovsg/spark-base
+  - IMAGE_NAME=guangie88/datagovsg-spark-base
 
 matrix:
   include:

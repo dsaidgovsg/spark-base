@@ -3,7 +3,7 @@ language: bash
 env:
   global:
   - REPO_BASE=datagovsg
-  - IMAGE_NAME=${REPO_BASE}/datagovsg-spark-base
+  - IMAGE_NAME=${REPO_BASE}/spark-base
 
 matrix:
   include:

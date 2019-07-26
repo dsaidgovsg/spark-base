@@ -16,7 +16,7 @@ RUN set -euo pipefail && \
         ; \
     # Install pip packages
     if [ "${PACKAGE_SET}" = "standard" ]; then \
-        PACKAGES="numpy pandas pyjwt pyproj shapely requests"; \
+        PACKAGES="numpy==1.11.2 pandas==0.22.0 pyjwt==1.5.1 pyproj==1.9.5.1 shapely==1.5.17 requests==2.18.4"; \
     fi; \
     ## TODO - shapely will fail because it needs libgeos, which doesn't exist in Alpine repo (unless edge)
     ## Python 2

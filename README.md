@@ -16,6 +16,7 @@ The following build arguments are:
   - Currently only `"standard"` is supported, which includes:
     - `numpy`
     - `pandas`
+    - `pyjwt`
     - `pyproj`
     - `shapely`
     - `requests`

@@ -19,7 +19,7 @@ RUN set -euo pipefail && \
         ; \
     # Install pip packages - the left-to-right order matters
     if [ "${PACKAGE_SET}" = "standard" ]; then \
-        PACKAGES="numpy pandas pyproj shapely requests"; \
+        PACKAGES="numpy pandas pyjwt pyproj shapely requests"; \
     fi; \
     ## Python 2
     python2 -m pip install --no-cache-dir --no-binary=:all: wheel; \

@@ -1,0 +1,70 @@
+language: bash
+
+env:
+  global:
+  - IMAGE_NAME=spark-base
+
+matrix:
+  include:
+  # Debian builds
+{%- for v in versions %}
+{%- for spark in v.spark %}
+{%- for scala in v.scala %}
+{%- for hadoop in v.hadoop %}
+{%- for python in v.python %}
+  - services: docker
+    env:
+    - SPARK_VERSION={{ spark }}
+    - SCALA_VERSION={{ scala }}
+    - HADOOP_VERSION={{ hadoop }}
+    - PYTHON_VERSION={{ python }}
+    - PACKAGE_SET={{ v.package_set }}
+    - DIST=debian
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+
+  # Alpine builds
+{%- for v in versions %}
+{%- for spark in v.spark %}
+{%- for scala in v.scala %}
+{%- for hadoop in v.hadoop %}
+{%- for python in v.python %}
+  - services: docker
+    env:
+    - SPARK_VERSION={{ spark }}
+    - SCALA_VERSION={{ scala }}
+    - HADOOP_VERSION={{ hadoop }}
+    - PYTHON_VERSION={{ python }}
+    - PACKAGE_SET={{ v.package_set }}
+    - DIST=alpine
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}
+
+script:
+- shellcheck push-images.sh
+- TAG_NAME="${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
+# Not including username for image name which can change based on fork / PR from external user
+- |-
+  docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
+    --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
+    --build-arg "SCALA_VERSION=${SCALA_VERSION}" \
+    --build-arg "HADOOP_VERSION=${HADOOP_VERSION}" \
+    --build-arg "PYTHON_VERSION=${PYTHON_VERSION}" \
+    --build-arg "PACKAGE_SET=${PACKAGE_SET}" \
+    ;
+
+deploy:
+  provider: script
+  script: bash push-images.sh
+  on:
+    branch: master
+
+branches:
+  only:
+  - master

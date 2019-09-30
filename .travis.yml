@@ -2,35 +2,288 @@ language: bash
 
 env:
   global:
-  - REPO_BASE=datagovsg
-  - IMAGE_NAME=${REPO_BASE}/spark-base
+  - IMAGE_NAME=spark-base
 
 matrix:
   include:
+  # Debian builds
   - services: docker
     env:
-    - SPARK_VERSION=2.4.0
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
     - HADOOP_VERSION=3.1.0
-    - PACKAGE_SET=standard
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=debian
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
     - DIST=debian
 
-before_script:
-- set -e
-- docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  # Alpine builds
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.4.4
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=3.1.0
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=2.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.11
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.5
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.6
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
+  - services: docker
+    env:
+    - SPARK_VERSION=2.3.3
+    - SCALA_VERSION=2.12
+    - HADOOP_VERSION=2.7.3
+    - PYTHON_VERSION=3.7
+    - PACKAGE_SET=numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18
+    - DIST=alpine
 
 script:
-- FROM_DOCKER_TAG="${SPARK_VERSION}_hadoop-${HADOOP_VERSION}_hive_pyspark_${DIST}"
-- FULL_IMAGE_NAME="${IMAGE_NAME}:${FROM_DOCKER_TAG}"
-- |
-  docker build . -f Dockerfile-${DIST} \
-    --build-arg SPARK_VERSION="${SPARK_VERSION}" \
-    --build-arg HADOOP_VERSION="${HADOOP_VERSION}" \
-    --build-arg PACKAGE_SET="${PACKAGE_SET}" \
-    -t ${FULL_IMAGE_NAME}
-- |
-  if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-    docker push ${FULL_IMAGE_NAME};
-  fi
+- shellcheck push-images.sh
+- TAG_NAME="${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
+# Not including username for image name which can change based on fork / PR from external user
+- |-
+  docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
+    --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
+    --build-arg "SCALA_VERSION=${SCALA_VERSION}" \
+    --build-arg "HADOOP_VERSION=${HADOOP_VERSION}" \
+    --build-arg "PYTHON_VERSION=${PYTHON_VERSION}" \
+    --build-arg "PACKAGE_SET=${PACKAGE_SET}" \
+    ;
+
+deploy:
+  provider: script
+  script: bash push-images.sh
+  on:
+    branch: master
 
 branches:
   only:

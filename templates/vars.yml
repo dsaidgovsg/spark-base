@@ -1,0 +1,28 @@
+versions:
+- spark:        ['2.4.4']
+  scala:        ['2.11', '2.12']
+  hadoop:       ['3.1.0']
+  python:       ['2.7']
+  package_set:  'numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18'
+
+- spark:        ['2.4.4']
+  scala:        ['2.11', '2.12']
+  hadoop:       ['3.1.0']
+  python:       ['3.5', '3.6', '3.7']
+  package_set:  'numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18'
+
+- spark:        ['2.3.3']
+  scala:        ['2.11', '2.12']
+  hadoop:       ['2.7.3']
+  python:       ['2.7']
+  package_set:  'numpy~=1.11 pandas~=0.22.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18'
+
+- spark:        ['2.3.3']
+  scala:        ['2.11', '2.12']
+  hadoop:       ['2.7.3']
+  python:       ['3.5', '3.6', '3.7']
+  package_set:  'numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18'
+
+# Note 1: Cannot use pandas~=0.22.0 for Python 3.8 due to Cython C generation issue
+# https://github.com/pandas-dev/pandas/issues/21785
+# Note 2: Spark version 2.0.z does not have pyspark distribution

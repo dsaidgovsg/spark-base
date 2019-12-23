@@ -14,12 +14,13 @@ RUN set -euo pipefail && \
         g++ \
         musl-dev \
         ; \
-    # geos-dev only exist in edge/testing unfortunately
-    apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    # geos-dev only exist in edge/community unfortunately
+    apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
         geos \
         geos-dev \
         ; \
     # Install pip packages
+    python -m pip install --no-cache-dir --no-binary=:all Cython; \
     python -m pip install --no-cache-dir --no-binary=:all: ${PACKAGE_SET}; \
     # Clean up build deps
     apk del \

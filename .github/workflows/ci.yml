@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        version:
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.11"
+          hadoop: "3.1.0"
+          python: "3.5"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.11"
+          hadoop: "3.1.0"
+          python: "3.6"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.11"
+          hadoop: "3.1.0"
+          python: "3.7"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.12"
+          hadoop: "3.1.0"
+          python: "3.5"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.12"
+          hadoop: "3.1.0"
+          python: "3.6"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.4.4"
+          scala: "2.12"
+          hadoop: "3.1.0"
+          python: "3.7"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.11"
+          hadoop: "2.7.3"
+          python: "3.5"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.11"
+          hadoop: "2.7.3"
+          python: "3.6"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.11"
+          hadoop: "2.7.3"
+          python: "3.7"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.12"
+          hadoop: "2.7.3"
+          python: "3.5"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.12"
+          hadoop: "2.7.3"
+          python: "3.6"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+        - dist: "debian"
+          spark: "2.3.3"
+          scala: "2.12"
+          hadoop: "2.7.3"
+          python: "3.7"
+          package_set: "numpy~=1.17 pandas~=0.25.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: spark-base
+      SELF_VERSION: "v1"
+      DIST: "${{ matrix.version.dist }}"
+      SPARK_VERSION: "${{ matrix.version.spark }}"
+      SCALA_VERSION: "${{ matrix.version.scala }}"
+      HADOOP_VERSION: "${{ matrix.version.hadoop }}"
+      PYTHON_VERSION: "${{ matrix.version.python }}"
+      PACKAGE_SET: "${{ matrix.version.package_set }}"
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+    - name: Install tera-cli
+      run: |-
+        wget https://github.com/guangie88/tera-cli/releases/download/v0.2.1/tera_linux_amd64 -O /tmp/tera
+        chmod +x /tmp/tera
+    - name: Check differences between ci.yml and ci.yml.tmpl
+      run: |-
+        cp .github/workflows/ci.yml .github/workflows/ci.yml.backup
+        TERA=/tmp/tera ./templates/apply-vars.sh
+        if ! diff .github/workflows/ci.yml .github/workflows/ci.yml.backup; then echo "ci.yml.tmpl and ci.yml differs!" && exit 1; fi
+    - name: Check shell scripts
+      run: |-
+        shellcheck templates/apply-vars.sh
+        shellcheck push-images.sh
+    - name: Build Docker image
+      run: |-
+        TAG_NAME="${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
+        docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
+          --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
+          --build-arg "SCALA_VERSION=${SCALA_VERSION}" \
+          --build-arg "HADOOP_VERSION=${HADOOP_VERSION}" \
+          --build-arg "PYTHON_VERSION=${PYTHON_VERSION}" \
+          --build-arg "PACKAGE_SET=${PACKAGE_SET}" \
+          ;
+    - name: Push Docker image
+      run: bash push-images.sh
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      if: github.event_name == 'push'

@@ -1,7 +1,9 @@
 # Spark Base Image
 
-Experimental Dockerfile setup for Spark set-up, imbued with varying degree of
-Python data science packages.
+![CI Status](https://img.shields.io/github/workflow/status/guangie88/spark-base/CI/master?label=CI&logo=github&style=for-the-badge)
+
+Dockerfile setup for Spark set-up, imbued with varying degree of Python
+data science packages.
 
 This set-up is mainly useful for creating Spark workers via Docker containers,
 since for Pyspark, the requirements have to be installed on the workers.
@@ -12,6 +14,7 @@ which include the following:
 
 - `numpy`
 - `pandas`
+- `pendulum==1.4.4`
 - `pyjwt`
 - `pyproj`
 - `shapely`
@@ -47,3 +50,9 @@ Otherwise, you will need `cargo`, which can be installed via
 [rustup](https://rustup.rs/).
 
 Once `cargo` is installed, simply run `cargo install tera-cli --version=^0.2.0`.
+
+Always make changes in `templates/ci.yml.tmpl` since the template will be
+applied onto `.github/workflows/ci.yml`.
+
+Run `templates/apply-vars.sh` to apply the template once `tera-cli` has been
+installed.

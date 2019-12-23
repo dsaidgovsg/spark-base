@@ -113,7 +113,7 @@ jobs:
         shellcheck push-images.sh
     - name: Build Docker image
       run: |-
-        TAG_NAME="${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
+        TAG_NAME="${SELF_VERSION}_${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
         docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
           --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
           --build-arg "SCALA_VERSION=${SCALA_VERSION}" \

@@ -27,13 +27,15 @@ requirements.
 ## Example Docker build command
 
 ```bash
+BASE_VERSION="v2"
 SPARK_VERSION="2.4.4"
 SCALA_VERSION="2.12"
 HADOOP_VERSION="3.1.0"
 PYTHON_VERSION="3.7"
-PACKAGE_SET="numpy~=1.11 pandas~=0.23.0 pyjwt~=1.5 pyproj~=1.9 shapely~=1.5 requests~=2.18"
+PACKAGE_SET="numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22"
 
 docker build debian/ -t spark-base-debian \
+    --build-arg "BASE_VERSION=${BASE_VERSION}" \
     --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
     --build-arg "SCALA_VERSION=${SCALA_VERSION}" \
     --build-arg "HADOOP_VERSION=${HADOOP_VERSION}" \

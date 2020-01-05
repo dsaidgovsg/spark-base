@@ -35,6 +35,7 @@ jobs:
     env:
       IMAGE_NAME: spark-base
       SELF_VERSION: "{{ self_version }}"
+      BASE_VERSION: "{{ base_version }}"
       {% raw -%}
       DIST: "${{ matrix.version.dist }}"
       SPARK_VERSION: "${{ matrix.version.spark }}"
@@ -63,6 +64,7 @@ jobs:
       run: |-
         TAG_NAME="${SELF_VERSION}_${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
         docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
+          --build-arg "BASE_VERSION=${BASE_VERSION}" \
           --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
           --build-arg "SCALA_VERSION=${SCALA_VERSION}" \
           --build-arg "HADOOP_VERSION=${HADOOP_VERSION}" \

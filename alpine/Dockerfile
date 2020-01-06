@@ -11,24 +11,34 @@ ARG PACKAGE_SET
 RUN set -euo pipefail && \
     # Install build deps
     apk add --no-cache \
+        cmake \
         gcc \
+        git \
         g++ \
+        make \
         musl-dev \
         ; \
-    # geos-dev only exist in edge/community unfortunately
-    apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
-        geos \
-        geos-dev \
-        ; \
+    # Install geos packages
+    git clone --depth=1 https://github.com/libgeos/geos.git -b 3.8.0; \
+    cd geos; \
+    cmake -DCMAKE_BUILD_TYPE=Release .; \
+    make -j 4; \
+    make install; \
+    cd -; \
+    rm -rf geos; \
+    ldconfig /usr/local/lib/; \
     # Install pip packages
-    python -m pip install --no-cache-dir --no-binary=:all: Cython; \
-    python -m pip install --no-cache-dir --no-binary=:all: ${PACKAGE_SET}; \
+    python -m pip install --no-cache-dir Cython; \
+    python -m pip install --no-cache-dir numpy~=1.17; \
+    python -m pip install --no-cache-dir ${PACKAGE_SET}; \
     # Clean up build deps
     apk del \
+        cmake \
         gcc \
+        git \
         g++ \
+        make \
         # Only the shared library is required at runtime
         musl-dev \
-        geos-dev \
         ; \
     :

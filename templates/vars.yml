@@ -1,8 +1,7 @@
 self_version: 'v1'
 base_version: 'v2'
 
-# dists: ['debian', 'alpine']
-dists: ['debian']
+dists: ['debian', 'alpine']
 
 versions:
 - spark:        ['2.4.4']

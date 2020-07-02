@@ -1,20 +1,20 @@
-self_version: 'v1'
+self_version: 'v2'
 base_version: 'v2'
 
-dists: ['debian', 'alpine']
+dists: ['debian']
 
 versions:
 - spark:        ['2.4.4', '2.4.5']
   scala:        ['2.11', '2.12']
   hadoop:       ['3.1.0']
   python:       ['3.5', '3.6', '3.7', '3.8']
-  package_set:  'numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22'
+  package_set:  'attrs~=19.3 numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 python-dateutil~=2.8 shapely~=1.6 requests~=2.22'
 
 - spark:        ['2.3.4']
   scala:        ['2.11', '2.12']
   hadoop:       ['2.7.3']
   python:       ['3.5', '3.6', '3.7', '3.8']
-  package_set:  'numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 shapely~=1.6 requests~=2.22'
+  package_set:  'attrs~=19.3 numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 python-dateutil~=2.8 shapely~=1.6 requests~=2.22'
 
 # Note 1: Cannot use pandas~=0.22.0 for Python 3.8 due to Cython C generation issue
 # https://github.com/pandas-dev/pandas/issues/21785

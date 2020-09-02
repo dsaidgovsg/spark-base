@@ -1,6 +1,6 @@
 # Spark Base Image
 
-![CI Status](https://img.shields.io/github/workflow/status/guangie88/spark-base/CI/master?label=CI&logo=github&style=for-the-badge)
+![CI Status](https://img.shields.io/github/workflow/status/dsaidgovsg/spark-base/CI/master?label=CI&logo=github&style=for-the-badge)
 
 Dockerfile setup for Spark set-up, imbued with varying degree of Python
 data science packages.

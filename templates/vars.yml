@@ -4,15 +4,15 @@ base_version: 'v2'
 dists: ['debian']
 
 versions:
-- spark:        ['2.4.4', '2.4.5']
-  scala:        ['2.11', '2.12']
-  hadoop:       ['3.1.0']
+- spark:        ['3.0.0', '3.0.1']
+  scala:        ['2.12']
+  hadoop:       ['3.2.0']
   python:       ['3.5', '3.6', '3.7', '3.8']
   package_set:  'attrs~=19.3 numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 python-dateutil~=2.8 shapely~=1.6 requests~=2.22'
 
-- spark:        ['2.3.4']
+- spark:        ['2.4.5', '2.4.6', '2.4.7']
   scala:        ['2.11', '2.12']
-  hadoop:       ['2.7.3']
+  hadoop:       ['3.1.0']
   python:       ['3.5', '3.6', '3.7', '3.8']
   package_set:  'attrs~=19.3 numpy~=1.17 pandas~=0.25.0 pendulum==1.4.4 pyjwt~=1.5 pyproj~=1.9 python-dateutil~=2.8 shapely~=1.6 requests~=2.22'
 

@@ -45,6 +45,10 @@ jobs:
       PACKAGE_SET: "${{ matrix.version.package_set }}"
       {%- endraw %}
     steps:
+    - name: Set global environment variables
+      run: |-
+        TAG_NAME="${SELF_VERSION}_${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
+        echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
     - name: Checkout code
       uses: actions/checkout@v1
     - name: Install tera-cli
@@ -62,7 +66,6 @@ jobs:
         shellcheck push-images.sh
     - name: Build Docker image
       run: |-
-        TAG_NAME="${SELF_VERSION}_${SPARK_VERSION}_scala-${SCALA_VERSION}_hadoop-${HADOOP_VERSION}_python-${PYTHON_VERSION}_${DIST}"
         docker build ${DIST}/ -t "${IMAGE_NAME}:${TAG_NAME}" \
           --build-arg "BASE_VERSION=${BASE_VERSION}" \
           --build-arg "SPARK_VERSION=${SPARK_VERSION}" \
